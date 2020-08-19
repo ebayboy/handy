@@ -33,13 +33,17 @@ handy_examples: $(EXAMPLES)
 $(EXAMPLES): $(LIBRARY)
 $(KW): $(LIBRARY)
 
+PREFIX=/usr/local/handy
+
 install: libhandy.a
-	mkdir -p $(PREFIX)/usr/local/include/handy
-	cp -f handy/*.h $(PREFIX)/usr/local/include/handy
-	cp -f libhandy.a $(PREFIX)/usr/local/lib
+	mkdir -p ${PREFIX}/include/handy
+	mkdir -p ${PREFIX}/lib
+	cp -f handy/*.h ${PREFIX}/include/handy/
+	cp -f libhandy.a $(PREFIX)/lib/
 
 uninstall:
-	rm -rf $(PREFIX)/usr/local/include/handy $(PREFIX)/usr/local/lib/libhandy.a
+	rm -rf $(PREFIX)
+
 clean:
 			-rm -f $(TARGETS)
 			-rm -f */*.o
