@@ -19,7 +19,7 @@
 //channel 3:  cli attach to server
 //events 5: POLLOUT(0x10) | POOLIN(0x01 == 0x11 == 5)
 2020/08/26-18:01:38.039838 2bc8 TRACE handy/poller.cc:57 adding channel 3 fd 7 events 5 epoll 3  ==>  createConnection -> attach -> new channel -> addChannel(state::Handshaking)  writeEvent | readEvent
-2020/08/26-18:01:38.039898 2bc8 TRACE handy/conn.cc:22 tcp constructed 0.0.0.0:36097 - 127.0.0.1:2099 fd: 7  onWriteHandler ->  handshaking -> connect to server ...
+2020/08/26-18:01:38.039898 2bc8 TRACE handy/conn.cc:22 tcp constructed 0.0.0.0:36097 - 127.0.0.1:2099 fd: 7  ==>client  writeAble -> onWriteHandler ->  handshaking 
 2020/08/26-18:01:38.039913 2bc8 INFO reconnect.cc:32 ====createConnection over
 
 2020/08/26-18:01:38.039918 2bc8 INFO reconnect.cc:35 set cli conn reconnect interval 300ms...
@@ -31,7 +31,7 @@ runAfter:65
 
 ====  init over ===
 
-//========  server 开始处理 =============
+//========  server listen 开始处理 =============
 //非阻塞socket的server端处理
 //1. read(conn) EAGAIN(11)
 //2. connect  EINPROGRESS(115)
@@ -48,12 +48,16 @@ runAfter:65
 2020/08/26-18:01:38.040229 2bc8 TRACE handy/poller.cc:68 modifying channel 3 fd 7 events read 1 write 0 epoll 3 ==> server loop_once => handleWrite -> enableWrite
 //========  server 端处理完毕=============
 
-2020/08/26-18:01:38.040245 2bc8 TRACE handy/conn.cc:153 tcp connected 0.0.0.0:36097 - 127.0.0.1:2099 fd 7 ==> client:  handshaking log:  
-2020/08/26-18:01:38.040253 2bc8 TRACE handy/poller.cc:96 channel 2 fd 6 handle read ===> server : read
 
-//channel 4 :new connection
-2020/08/26-18:01:38.040292 2bc8 TRACE handy/poller.cc:57 adding channel 4 fd 8 events 5 epoll 3  ==> addChannel
-2020/08/26-18:01:38.040308 2bc8 TRACE handy/conn.cc:22 tcp constructed 127.0.0.1:2099 - 127.0.0.1:56540 fd: 8  ==> attach  create channel, add event
+//客户端连接服务器： connect to ...
+2020/08/26-18:01:38.040245 2bc8 TRACE handy/conn.cc:153 tcp connected 0.0.0.0:36097 - 127.0.0.1:2099 fd 7 ==> client:  handshaking log:  
+
+
+//channel 2 server listen channel
+2020/08/26-18:01:38.040253 2bc8 TRACE handy/poller.cc:96 channel 2 fd 6 handle read ===> loop_once server : read
+2020/08/26-18:01:38.040292 2bc8 TRACE handy/poller.cc:57 adding channel 4 fd 8 events 5 epoll 3  ==> addChannel  server to client
+2020/08/26-18:01:38.040308 2bc8 TRACE handy/conn.cc:22 tcp constructed 127.0.0.1:2099 - 127.0.0.1:56540 fd: 8  ==> listen accept , attach  create channel, add event
+//channel 4(server) <--> channel 3(client)
 
 2020/08/26-18:01:38.040336 2bc8 TRACE handy/poller.cc:88 epoll wait 600 return 1 errno 11 used 0 millsecond ==>loop_once
 2020/08/26-18:01:38.040343 2bc8 TRACE handy/poller.cc:99 channel 4 fd 8 handle write
@@ -64,62 +68,68 @@ runAfter:65
 2020/08/26-18:01:38.040365 2bc8 INFO reconnect.cc:22 new client connected..., will close conn after 200ms...
 runAfter:65
 2020/08/26-18:01:38.240731 2bc8 TRACE handy/poller.cc:88 epoll wait 200 return 0 errno 11 used 200 millsecond
-
-//
 2020/08/26-18:01:38.240847 2bc8 INFO reconnect.cc:24 close con with 200ms arrived!
 2020/08/26-18:01:38.240926 2bc8 TRACE handy/poller.cc:88 epoll wait 400 return 1 errno 11 used 0 millsecond
 2020/08/26-18:01:38.240944 2bc8 TRACE handy/poller.cc:96 channel 1 fd 4 handle read
+
+//服务端关闭连接 channel 4 (server)   
 2020/08/26-18:01:38.240985 2bc8 TRACE handy/event_base.cc:341 close channel 4 fd 8
 2020/08/26-18:01:38.241170 2bc8 TRACE handy/poller.cc:74 deleting channel 4 fd 8 epoll 3
 2020/08/26-18:01:38.241347 2bc8 TRACE handy/conn.cc:93 tcp closing 127.0.0.1:2099 - 127.0.0.1:56540 fd -1 11
 runAfter:65
 
-//
+//客户端关闭连接channel 3
 2020/08/26-18:01:38.241402 2bc8 TRACE handy/poller.cc:88 epoll wait 200 return 1 errno 11 used 0 millsecond
 2020/08/26-18:01:38.241412 2bc8 TRACE handy/poller.cc:96 channel 3 fd 7 handle read
 2020/08/26-18:01:38.241426 2bc8 TRACE handy/conn.cc:121 channel 3 fd 7 readed 0 bytes
 2020/08/26-18:01:38.241438 2bc8 TRACE handy/conn.cc:93 tcp closing 0.0.0.0:36097 - 127.0.0.1:2099 fd 7 11
-2020/08/26-18:01:38.241448 2bc8 INFO handy/event_base.cc:383 reconnect interval: 300 will reconnect after 99 ms
-runAfter:65
-2020/08/26-18:01:38.241464 2bc8 TRACE handy/event_base.cc:341 close channel 3 fd 7
-2020/08/26-18:01:38.241471 2bc8 TRACE handy/poller.cc:74 deleting channel 3 fd 7 epoll 3
 
-//
-2020/08/26-18:01:38.340936 2bc8 TRACE handy/poller.cc:88 epoll wait 99 return 0 errno 11 used 99 millsecond
+//client reconnect after 99ms
+2020/08/26-18:01:38.241448 2bc8 INFO handy/event_base.cc:383 reconnect interval: 300 will reconnect after 99 ms [server]
+
+2020/08/26-18:01:38.241464 2bc8 TRACE handy/event_base.cc:341 close channel 3 fd 7 [client]
+2020/08/26-18:01:38.241471 2bc8 TRACE handy/poller.cc:74 deleting channel 3 fd 7 epoll 3 [client]
+
+2020/08/26-18:01:38.340936 2bc8 TRACE handy/poller.cc:88 epoll wait 99 return 0 errno 11 used 99 millsecond [server]
+
+//client reconnect to server with client_channel 5
+//客户端发起重连
 2020/08/26-18:01:38.341423 2bc8 TRACE handy/poller.cc:57 adding channel 5 fd 7 events 5 epoll 3
-2020/08/26-18:01:38.341469 2bc8 TRACE handy/conn.cc:22 tcp constructed 254.127.0.0:29247 - 127.0.0.1:2099 fd: 7
-2020/08/26-18:01:38.341485 2bc8 TRACE handy/poller.cc:88 epoll wait 100 return 2 errno 115 used 0 millsecond
-2020/08/26-18:01:38.341490 2bc8 TRACE handy/poller.cc:99 channel 5 fd 7 handle write
-2020/08/26-18:01:38.341497 2bc8 TRACE handy/poller.cc:68 modifying channel 5 fd 7 events read 1 write 0 epoll 3
+2020/08/26-18:01:38.341469 2bc8 TRACE handy/conn.cc:22 tcp constructed 254.127.0.0:29247 - 127.0.0.1:2099 fd: 7 [client]
+2020/08/26-18:01:38.341485 2bc8 TRACE handy/poller.cc:88 epoll wait 100 return 2 errno 115 used 0 millsecond  [client]
+2020/08/26-18:01:38.341490 2bc8 TRACE handy/poller.cc:99 channel 5 fd 7 handle write [client]
+2020/08/26-18:01:38.341497 2bc8 TRACE handy/poller.cc:68 modifying channel 5 fd 7 events read 1 write 0 epoll 3 [client]
+2020/08/26-18:01:38.341506 2bc8 TRACE handy/conn.cc:153 tcp connected 254.127.0.0:29247 - 127.0.0.1:2099 fd 7[client]
 
-//reconnect
-2020/08/26-18:01:38.341506 2bc8 TRACE handy/conn.cc:153 tcp connected 254.127.0.0:29247 - 127.0.0.1:2099 fd 7
-2020/08/26-18:01:38.341510 2bc8 TRACE handy/poller.cc:96 channel 2 fd 6 handle read
-2020/08/26-18:01:38.341532 2bc8 TRACE handy/poller.cc:57 adding channel 6 fd 8 events 5 epoll 3
+//server listen: channel 2
+//channel 6(server)  <--> channel 5(client)
+//服务端接收连接
+2020/08/26-18:01:38.341510 2bc8 TRACE handy/poller.cc:96 channel 2 fd 6 handle read [server]
+2020/08/26-18:01:38.341532 2bc8 TRACE handy/poller.cc:57 adding channel 6 fd 8 events 5 epoll 3 ==> POOLIN | POOLOUT
 2020/08/26-18:01:38.341542 2bc8 TRACE handy/conn.cc:22 tcp constructed 127.0.0.1:2099 - 127.0.0.1:56542 fd: 8
 2020/08/26-18:01:38.341561 2bc8 TRACE handy/poller.cc:88 epoll wait 100 return 1 errno 11 used 0 millsecond
 2020/08/26-18:01:38.341565 2bc8 TRACE handy/poller.cc:99 channel 6 fd 8 handle write
 2020/08/26-18:01:38.341570 2bc8 TRACE handy/poller.cc:68 modifying channel 6 fd 8 events read 1 write 0 epoll 3
 2020/08/26-18:01:38.341578 2bc8 TRACE handy/conn.cc:153 tcp connected 127.0.0.1:2099 - 127.0.0.1:56542 fd 8
+//server set 200ms close client timer
 2020/08/26-18:01:38.341583 2bc8 INFO reconnect.cc:22 new client connected..., will close conn after 200ms...
-runAfter:65
 
-//
+//200ms后server关闭连接
 2020/08/26-18:01:38.469381 2bc8 TRACE handy/poller.cc:88 epoll wait 100 return 0 errno 11 used 128 millsecond
 2020/08/26-18:01:38.469418 2bc8 INFO reconnect.cc:24 close con with 200ms arrived!
-2020/08/26-18:01:38.469430 2bc8 TRACE handy/event_base.cc:368 tcp destroyed 127.0.0.1:2099 - 127.0.0.1:56540
+2020/08/26-18:01:38.469430 2bc8 TRACE handy/event_base.cc:368 tcp destroyed 127.0.0.1:2099 - 127.0.0.1:56540 //server销毁 server端channel
 2020/08/26-18:01:38.556155 2bc8 TRACE handy/poller.cc:88 epoll wait 72 return 0 errno 11 used 87 millsecond
 2020/08/26-18:01:38.556223 2bc8 INFO reconnect.cc:24 close con with 200ms arrived!
 2020/08/26-18:01:38.556264 2bc8 TRACE handy/poller.cc:88 epoll wait 84 return 1 errno 11 used 0 millsecond
-2020/08/26-18:01:38.556276 2bc8 TRACE handy/poller.cc:96 channel 1 fd 4 handle read
-2020/08/26-18:01:38.556293 2bc8 TRACE handy/event_base.cc:341 close channel 6 fd 8
+2020/08/26-18:01:38.556276 2bc8 TRACE handy/poller.cc:96 channel 1 fd 4 handle read //readAable
+2020/08/26-18:01:38.556293 2bc8 TRACE handy/event_base.cc:341 close channel 6 fd 8  
 2020/08/26-18:01:38.556301 2bc8 TRACE handy/poller.cc:74 deleting channel 6 fd 8 epoll 3
-2020/08/26-18:01:38.556434 2bc8 TRACE handy/conn.cc:93 tcp closing 127.0.0.1:2099 - 127.0.0.1:56542 fd -1 11
+2020/08/26-18:01:38.556434 2bc8 TRACE handy/conn.cc:93 tcp closing 127.0.0.1:2099 - 127.0.0.1:56542 fd -1 11 //发送关闭通知给client (FIN|RESET)
 runAfter:65
 
-//
+//客户端关闭连接, 并重连
 2020/08/26-18:01:38.556707 2bc8 TRACE handy/poller.cc:88 epoll wait 84 return 1 errno 11 used 0 millsecond
-2020/08/26-18:01:38.556728 2bc8 TRACE handy/poller.cc:96 channel 5 fd 7 handle read
+2020/08/26-18:01:38.556728 2bc8 TRACE handy/poller.cc:96 channel 5 fd 7 handle read //客户端处理读事件
 2020/08/26-18:01:38.556748 2bc8 TRACE handy/conn.cc:121 channel 5 fd 7 readed 0 bytes
 2020/08/26-18:01:38.556767 2bc8 TRACE handy/conn.cc:93 tcp closing 254.127.0.0:29247 - 127.0.0.1:2099 fd 7 11
 2020/08/26-18:01:38.556781 2bc8 INFO handy/event_base.cc:383 reconnect interval: 300 will reconnect after 85 ms
@@ -128,37 +138,55 @@ runAfter:65
 2020/08/26-18:01:38.556811 2bc8 TRACE handy/poller.cc:74 deleting channel 5 fd 7 epoll 3
 
 
-//
+//客户端重连计时器到时, 新建channel 7 (client)
 2020/08/26-18:01:38.645977 2bc8 TRACE handy/poller.cc:88 epoll wait 84 return 0 errno 11 used 89 millsecond
 2020/08/26-18:01:38.647179 2bc8 TRACE handy/poller.cc:57 adding channel 7 fd 7 events 5 epoll 3
 2020/08/26-18:01:38.647428 2bc8 TRACE handy/conn.cc:22 tcp constructed 254.127.0.0:29247 - 127.0.0.1:2099 fd: 7
+
+//插入日志： 服务端接收到上一次的客户端连接关闭后， 销毁tcp连接
 2020/08/26-18:01:38.647522 2bc8 TRACE handy/event_base.cc:368 tcp destroyed 127.0.0.1:2099 - 127.0.0.1:56542
 
-//
 2020/08/26-18:01:38.647571 2bc8 TRACE handy/poller.cc:88 epoll wait 0 return 3 errno 115 used 0 millsecond
 2020/08/26-18:01:38.647595 2bc8 TRACE handy/poller.cc:99 channel 7 fd 7 handle write
 2020/08/26-18:01:38.647622 2bc8 TRACE handy/poller.cc:68 modifying channel 7 fd 7 events read 1 write 0 epoll 3
 2020/08/26-18:01:38.647658 2bc8 TRACE handy/conn.cc:153 tcp connected 254.127.0.0:29247 - 127.0.0.1:2099 fd 7
+
+//服务端listen accept连接 channel 8  <--> channel 7
 2020/08/26-18:01:38.647678 2bc8 TRACE handy/poller.cc:96 channel 2 fd 6 handle read
 2020/08/26-18:01:38.648051 2bc8 TRACE handy/poller.cc:57 adding channel 8 fd 8 events 5 epoll 3
 2020/08/26-18:01:38.648173 2bc8 TRACE handy/conn.cc:22 tcp constructed 127.0.0.1:2099 - 127.0.0.1:56544 fd: 8
+
+//处理channel 1(epoll base)事件
 2020/08/26-18:01:38.648460 2bc8 TRACE handy/poller.cc:96 channel 1 fd 4 handle read
 2020/08/26-18:01:38.648528 2bc8 INFO reconnect.cc:48 ====base.loop over
 
 ================= clean up ====================
+//关闭监听socket 
 2020/08/26-18:01:38.648572 2bc8 TRACE handy/event_base.cc:341 close channel 2 fd 6
 2020/08/26-18:01:38.648591 2bc8 TRACE handy/poller.cc:74 deleting channel 2 fd 6 epoll 3
+
 2020/08/26-18:01:38.648661 2bc8 INFO handy/poller.cc:44 destroying poller 3
+//释放poller 3
+
+//关闭 event_base socket
 2020/08/26-18:01:38.648683 2bc8 TRACE handy/event_base.cc:341 close channel 1 fd 4
 2020/08/26-18:01:38.648697 2bc8 TRACE handy/poller.cc:74 deleting channel 1 fd 4 epoll 3
+
+//客户端关闭连接
 2020/08/26-18:01:38.648976 2bc8 TRACE handy/event_base.cc:341 close channel 7 fd 7
 2020/08/26-18:01:38.649038 2bc8 TRACE handy/poller.cc:74 deleting channel 7 fd 7 epoll 3
 2020/08/26-18:01:38.649414 2bc8 TRACE handy/conn.cc:93 tcp closing 254.127.0.0:29247 - 127.0.0.1:2099 fd -1 11
 2020/08/26-18:01:38.649505 2bc8 TRACE handy/event_base.cc:368 tcp destroyed 254.127.0.0:29247 - 127.0.0.1:2099
+
+//服务端关闭连接
 2020/08/26-18:01:38.649545 2bc8 TRACE handy/event_base.cc:341 close channel 8 fd 8
 2020/08/26-18:01:38.649582 2bc8 TRACE handy/poller.cc:74 deleting channel 8 fd 8 epoll 3
 2020/08/26-18:01:38.650068 2bc8 TRACE handy/conn.cc:159 poll fd -1 return 0 revents 0
 2020/08/26-18:01:38.650155 2bc8 TRACE handy/conn.cc:93 tcp closing 127.0.0.1:2099 - 127.0.0.1:56544 fd -1 11
 runAfter:65
 2020/08/26-18:01:38.650443 2bc8 TRACE handy/event_base.cc:368 tcp destroyed 127.0.0.1:2099 - 127.0.0.1:56544
+
+//资源释放完毕， 删除poller 
 2020/08/26-18:01:38.650506 2bc8 INFO handy/poller.cc:49 poller 3 destroyed
+
+

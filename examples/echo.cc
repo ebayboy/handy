@@ -7,6 +7,7 @@ using namespace std;
 
 int main(int argc, const char *argv[]) {
     //create event_base
+    setloglevel("TRACE");
     EventBase base;
 
     //bind base SIGINT to base.exit
