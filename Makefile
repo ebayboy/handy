@@ -1,13 +1,27 @@
-#OPT ?= -O2 -DNDEBUG
-# (B) Debug mode, w/ full line-level debugging symbols
-OPT ?= -g2
-# (C) Profiling mode: opt, but w/debugging symbols
-# OPT ?= -O2 -g2 -DNDEBUG
 $(shell CC="$(CC)" CXX="$(CXX)" TARGET_OS="$(TARGET_OS)" ./build_config 1>&2)
 include config.mk
 
-CFLAGS += -I. $(PLATFORM_CCFLAGS) $(OPT)
-CXXFLAGS += -I. $(PLATFORM_CXXFLAGS) $(OPT)
+DEBUG=n
+CONV=n
+
+CFLAGS	:= -std=c++17 -Wall
+
+ifeq ($(DEBUG),y)
+	CFLAGS += -g2 -O0
+else
+	CFLAGS += -O3 -DNDEBUG
+endif
+
+ifeq ($(CONV),y)
+	INCLUDE+= -I /usr/local/libiconv/include
+	LIBS+= -L /usr/local/libiconv/lib
+
+	CFLAGS += -fprofile-arcs -ftest-coverage
+	CFLAGS += -lgcov
+endif
+
+CFLAGS += -I. $(PLATFORM_CCFLAGS) 
+CXXFLAGS += -I. $(PLATFORM_CXXFLAGS) 
 
 LDFLAGS += $(PLATFORM_LDFLAGS)
 LIBS += $(PLATFORM_LIBS)
