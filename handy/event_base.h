@@ -39,7 +39,7 @@ struct EventBase : public EventBases {
     bool cancel(TimerId timerid);
     //添加定时任务，interval=0表示一次性任务，否则为重复任务，时间为毫秒
     
-    //runAt2
+    //runAt2  runAt(, const std::function & task,)
     TimerId runAt(int64_t milli, const Task &task, int64_t interval = 0) 
     { 
       DD();
@@ -50,6 +50,7 @@ struct EventBase : public EventBases {
     TimerId runAt(int64_t milli, Task &&task, int64_t interval = 0);
 
     //runAfter1
+    //typedef std::function<void()> Task &task;
     TimerId runAfter(int64_t milli, const Task &task, int64_t interval = 0) 
     { 
       DD();
@@ -57,10 +58,12 @@ struct EventBase : public EventBases {
     }
 
     //runAfter2
+    //typedef std::function<void()> Task &&task;
     //将std:move(task), 调用Task(task)函数，对引用类型的task使用std:move减少拷贝消耗, std:move(task)
     TimerId runAfter(int64_t milli, Task &&task, int64_t interval = 0) 
     { 
       DD();
+      //runAt(,std::function && task,)
       return runAt(util::timeMilli() + milli, std::move(task), interval); 
     }
 

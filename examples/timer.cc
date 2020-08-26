@@ -1,5 +1,8 @@
 #include <handy/handy.h>
+
+
 using namespace handy;
+using namespace std;
 
 int main(int argc, const char *argv[]) {
     //create base
@@ -25,5 +28,6 @@ int main(int argc, const char *argv[]) {
     base.runAfter(3000, [&]() { base.exit(); });
 
     //dispatch loop
+    cout << "dispatch loop..." << endl;
     base.loop();
 }
