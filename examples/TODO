@@ -1,10 +1,9 @@
-.
 ├── chat
-├── codec-cli
+├── codec-cliK
 ├── codec-svr
 ├── daemon
 ├── daemon.conf
-├── echo
+├── echo    [OK]
 ├── hsha
 ├── http-hello
 ├── idle-close
