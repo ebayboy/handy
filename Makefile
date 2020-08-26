@@ -1,27 +1,30 @@
 $(shell CC="$(CC)" CXX="$(CXX)" TARGET_OS="$(TARGET_OS)" ./build_config 1>&2)
 include config.mk
 
-DEBUG=n
+NDEBUG=n
 CONV=n
 
-CFLAGS	:= -std=c++17 -Wall
+OPT	:= -std=c++17 -Wall
 
-ifeq ($(DEBUG),y)
-	CFLAGS += -g2 -O0
+ifeq ($(NDEBUG),y)
+	OPT += -O3 -DNDEBUG
 else
-	CFLAGS += -O3 -DNDEBUG
+	OPT += -g2 -O0
 endif
 
 ifeq ($(CONV),y)
 	INCLUDE+= -I /usr/local/libiconv/include
 	LIBS+= -L /usr/local/libiconv/lib
 
-	CFLAGS += -fprofile-arcs -ftest-coverage
-	CFLAGS += -lgcov
+	OPT += -fprofile-arcs -ftest-coverage
+	OPT += -lgcov
 endif
 
 CFLAGS += -I. $(PLATFORM_CCFLAGS) 
+CFLAGS += $(OPT)
+
 CXXFLAGS += -I. $(PLATFORM_CXXFLAGS) 
+CXXFLAGS += $(OPT)
 
 LDFLAGS += $(PLATFORM_LDFLAGS)
 LIBS += $(PLATFORM_LIBS)

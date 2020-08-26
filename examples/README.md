@@ -1,7 +1,7 @@
 - examples
 - 使用handy的示例
 - 
-- echo.cc 简单的回显服务
+- echo.cc 简单的回显服务 [OK]
 - timer.cc 使用定时器来管理定时任务
 - idle-close.cc 关闭一个空闲的连接
 - reconnect.cc 设置连接关闭后自动重连

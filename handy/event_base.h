@@ -1,6 +1,19 @@
 #pragma once
+
+#include <cstdlib>
+#include <cstdarg>
+#include <iostream>
+
 #include "handy-imp.h"
 #include "poller.h"
+
+#ifdef NDEBUG 
+#define DD()
+#else
+#define DD() do {                           \
+  std::cout <<__func__ << ":" << __LINE__ << std::endl; \
+} while (0)
+#endif
 
 namespace handy {
 
@@ -25,10 +38,31 @@ struct EventBase : public EventBases {
     //取消定时任务，若timer已经过期，则忽略
     bool cancel(TimerId timerid);
     //添加定时任务，interval=0表示一次性任务，否则为重复任务，时间为毫秒
-    TimerId runAt(int64_t milli, const Task &task, int64_t interval = 0) { return runAt(milli, Task(task), interval); }
+    
+    //runAt2
+    TimerId runAt(int64_t milli, const Task &task, int64_t interval = 0) 
+    { 
+      DD();
+      return runAt(milli, Task(task), interval); 
+    }
+
+    //Base: runAt1
     TimerId runAt(int64_t milli, Task &&task, int64_t interval = 0);
-    TimerId runAfter(int64_t milli, const Task &task, int64_t interval = 0) { return runAt(util::timeMilli() + milli, Task(task), interval); }
-    TimerId runAfter(int64_t milli, Task &&task, int64_t interval = 0) { return runAt(util::timeMilli() + milli, std::move(task), interval); }
+
+    //runAfter1
+    TimerId runAfter(int64_t milli, const Task &task, int64_t interval = 0) 
+    { 
+      DD();
+      return runAt(util::timeMilli() + milli, Task(task), interval); 
+    }
+
+    //runAfter2
+    //将std:move(task), 调用Task(task)函数，对引用类型的task使用std:move减少拷贝消耗, std:move(task)
+    TimerId runAfter(int64_t milli, Task &&task, int64_t interval = 0) 
+    { 
+      DD();
+      return runAt(util::timeMilli() + milli, std::move(task), interval); 
+    }
 
     //下列函数为线程安全的
 

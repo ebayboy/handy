@@ -1,5 +1,5 @@
 include ../config.mk
-CXXFLAGS += $(PLATFORM_CXXFLAGS) -lhandy $(PLATFORM_LDFLAGS)
+CXXFLAGS += -g2 $(PLATFORM_CXXFLAGS) -lhandy $(PLATFORM_LDFLAGS)
 
 SRCS=$(wildcard *.cc)
 PROGS=$(SRCS:.cc=)

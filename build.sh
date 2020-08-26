@@ -41,7 +41,7 @@ do
   case "$opt" in
     d) 
       echo "--with-debug" 
-      DEBUG=y
+      NDEBUG=n
       ;;
     p) 
       PREFIX=${OPTARG}
