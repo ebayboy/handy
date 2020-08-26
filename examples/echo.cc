@@ -13,6 +13,7 @@ int main(int argc, const char *argv[]) {
     Signal::signal(SIGINT, [&] { base.exit(); });
 
     //create tcpserver, bind server to base
+    //std::shared_ptr<TcpServer> svr;
     TcpServerPtr svr = TcpServer::startServer(&base, "", 2099);
 
     //exit if svr == NULL

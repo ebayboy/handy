@@ -342,6 +342,7 @@ void TcpServer::handleAccept() {
     }
 }
 
+//typedef std::shared_ptr<HSHA> HSHAPtr;
 HSHAPtr HSHA::startServer(EventBase *base, const std::string &host, unsigned short port, int threads) {
     HSHAPtr p = HSHAPtr(new HSHA(threads));
     p->server_ = TcpServer::startServer(base, host, port);
