@@ -20,7 +20,13 @@ int main(int argc, const char *argv[])
           });
       }
       });
+
+  //connect for for test
   auto con = TcpConn::createConnection(&base, "localhost", 2099);
+
+  //register timer
   base.runAfter(3000, [&]() { base.exit(); });
+
+  //dispatch loop
   base.loop();
 }
