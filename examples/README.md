@@ -3,7 +3,7 @@
 - 
 - echo.cc 简单的回显服务 [OK]
 - timer.cc 使用定时器来管理定时任务 [OK]
-- idle-close.cc 关闭一个空闲的连接
+- idle-close.cc 关闭一个空闲的连接 [OK]
 - reconnect.cc 设置连接关闭后自动重连
 - safe-close.cc 在其他线程中安全操作连接
 - chat.cc 简单的聊天应用，用户使用telnet登陆后，系统分配一个用户id，用户可以发送消息给某个用户，也可以发送消息给所有用户
