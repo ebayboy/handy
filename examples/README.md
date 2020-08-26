@@ -2,7 +2,7 @@
 - 使用handy的示例
 - 
 - echo.cc 简单的回显服务 [OK]
-- timer.cc 使用定时器来管理定时任务
+- timer.cc 使用定时器来管理定时任务 [OK]
 - idle-close.cc 关闭一个空闲的连接
 - reconnect.cc 设置连接关闭后自动重连
 - safe-close.cc 在其他线程中安全操作连接
