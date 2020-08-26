@@ -10,7 +10,11 @@
 namespace handy {
 
 const int kMaxEvents = 2000;
-const int kReadEvent = POLLIN;
+
+//POLLIN == EPOLLIN == 0x01 == 1
+const int kReadEvent = POLLIN; 
+
+//POOLOUT == EPOLLOUT == 0x10 == 4
 const int kWriteEvent = POLLOUT;
 
 struct PollerBase : private noncopyable {

@@ -35,6 +35,7 @@ PollerBase *createPoller() {
 }
 
 PollerEpoll::PollerEpoll() {
+    //EPOLL_CLOEXEC: 这里设置为FD_CLOEXEC表示当程序执行exec函数时本fd将被系统自动关闭
     fd_ = epoll_create1(EPOLL_CLOEXEC);
     fatalif(fd_ < 0, "epoll_create error %d %s", errno, strerror(errno));
     info("poller epoll %d created", fd_);
