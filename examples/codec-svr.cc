@@ -27,6 +27,8 @@ int main(int argc, const char *argv[]) {
     echo->onConnCreate([] {
         //客户端连接创建时， 创建新的tcp， 设定回调函数
         TcpConnPtr con(new TcpConn);
+
+        // LengthCodec:  给出了消息长度的消息
         con->onMsg(new LengthCodec, [](const TcpConnPtr &con, Slice msg) {
             info("recv msg: %.*s", (int) msg.size(), msg.data());
             con->sendMsg(msg);
