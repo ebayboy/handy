@@ -3,6 +3,11 @@
 using namespace std;
 using namespace handy;
 
+// 
+// 测试脚本： curl http://0.0.0.0:8081/hello?name=fanpf
+// 需要带 ? , 否则不是query_uri
+// tryDecode中的解码函数为： if (query_uri[i] == '?') {
+
 int main(int argc, const char *argv[]) {
     int threads = 1;
     if (argc > 1) {
