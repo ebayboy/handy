@@ -3,18 +3,27 @@
 using namespace std;
 using namespace handy;
 
+// 20M文件的buf
 char buf[20 * 1024 * 1024];
+
+static int times = 0;
 
 int main(int argc, const char *argv[]) {
     setloglevel("TRACE");
     int sended = 0, total = 1054768 * 100;
+
     memset(buf, 'a', sizeof buf);
+
     EventBase bases;
     Signal::signal(SIGINT, [&] { bases.exit(); });
+
     TcpServer echo(&bases);
     int r = echo.bind("", 2099);
     exitif(r, "bind failed %d %s", errno, strerror(errno));
+
+    // lambda sendcb
     auto sendcb = [&](const TcpConnPtr &con) {
+        info("Callback Write buf...");
         while (con->getOutput().size() == 0 && sended < total) {
             con->send(buf, sizeof buf);
             sended += sizeof buf;
@@ -25,17 +34,27 @@ int main(int argc, const char *argv[]) {
             bases.exit();
         }
     };
+
+    // call lambda sendcb
     echo.onConnCreate([sendcb]() {
+        //连接创建时回调
         TcpConnPtr con(new TcpConn);
+
+        //连接状态变化回调
         con->onState([sendcb](const TcpConnPtr &con) {
             if (con->getState() == TcpConn::Connected) {
+                //当连接状态变化为  TcpConn::Connected， 设置可写回调函数为sendcb
                 con->onWritable(sendcb);
             }
+
+            info("Direct write buf...[%d]", times++);
             sendcb(con);
         });
         return con;
     });
-    thread th([] {  //模拟了一个客户端，连接服务器后，接收服务器发送过来的数据
+
+    //模拟了一个客户端，连接服务器后，接收服务器发送过来的数据
+    thread th([] {
         EventBase base2;
         TcpConnPtr con = TcpConn::createConnection(&base2, "127.0.0.1", 2099);
         con->onRead([](const TcpConnPtr &con) {
@@ -50,6 +69,7 @@ int main(int argc, const char *argv[]) {
         });
         base2.loop();
     });
+
     bases.loop();
     th.join();
     info("program exited");
