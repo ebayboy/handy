@@ -13,6 +13,7 @@ int main(int argc, const char *argv[]) {
     TcpConnPtr con = TcpConn::createConnection(&base, "127.0.0.1", 2099, 3000);
 
     // set reconnect interval 3000ms
+    // 保证server在先启动， cli后启动也能执行到connect代码
     con->setReconnectInterval(3000);
 
     //接收到消息后打印到日志
