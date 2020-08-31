@@ -3,7 +3,11 @@
 
 namespace handy {
 
+// TcpConn 是对连接的封装， 真正的底层tcp连接是socket
+
 // Tcp连接，使用引用计数
+// enable_shared_from_this 强智能指针类
+//noncopyable： 禁止类拷贝
 struct TcpConn : public std::enable_shared_from_this<TcpConn>, private noncopyable {
     // Tcp连接的个状态
     enum State {
@@ -120,6 +124,7 @@ struct TcpServer : private noncopyable {
     ~TcpServer() { delete listen_channel_; }
     Ip4Addr getAddr() { return addr_; }
     EventBase *getBase() { return base_; }
+    //onConnCreate : 调用回调函数创建tcp连接  => TcpConnPtr con = createcb_();
     void onConnCreate(const std::function<TcpConnPtr()> &cb) { createcb_ = cb; }
     void onConnState(const TcpCallBack &cb) { statecb_ = cb; }
     void onConnRead(const TcpCallBack &cb) {

@@ -15,11 +15,13 @@ int main(int argc, const char *argv[]) {
     });
 
     hsha->onMsg(new LineCodec, [](const TcpConnPtr &con, const string &input) {
+        // get number [0-1000)
         int ms = rand() % 1000;
         info("processing a msg");
-        usleep(ms * 1000);
+        usleep(ms * 1000); // sleep 0-999 ms
         return util::format("%s used %d ms", input.c_str(), ms);
     });
+
     for (int i = 0; i < 5; i++) {
         TcpConnPtr con = TcpConn::createConnection(&base, "localhost", 2099);
         con->onMsg(new LineCodec, [](const TcpConnPtr &con, Slice msg) {
@@ -30,12 +32,14 @@ int main(int argc, const char *argv[]) {
             if (con->getState() == TcpConn::Connected) {
                 con->sendMsg("hello");
             }
+     
         });
     }
     base.runAfter(1000, [&, hsha] {
         base.exit();
         hsha->exit();
     });
+    
     base.loop();
     info("program exited");
 }

@@ -3,22 +3,32 @@
 using namespace std;
 using namespace handy;
 
-int main(int argc, const char *argv[]) 
-{
-  setloglevel("TRACE");
+int main(int argc, const char *argv[]) {
+    setloglevel("TRACE");
 
-  EventBase base;
-  Signal::signal(SIGINT, [&] { base.exit(); });
+    EventBase base;
+    Signal::signal(SIGINT, [&] { base.exit(); });
 
-  TcpConnPtr con = TcpConn::createConnection(&base, "127.0.0.1", 2099, 3000);
-  con->setReconnectInterval(3000);
-  con->onMsg(new LengthCodec, [](const TcpConnPtr &con, Slice msg) { info("recv msg: %.*s", (int) msg.size(), msg.data()); });
-  con->onState([=](const TcpConnPtr &con) {
-      info("onState called state: %d", con->getState());
-      if (con->getState() == TcpConn::Connected) {
-      con->sendMsg("hello");
-      }
-      });
-  base.loop();
-  info("program exited");
+    // connect to port 2099, and timeout 3000ms
+    TcpConnPtr con = TcpConn::createConnection(&base, "127.0.0.1", 2099, 3000);
+
+    // set reconnect interval 3000ms
+    con->setReconnectInterval(3000);
+
+    //接收到消息后打印到日志
+    con->onMsg(new LengthCodec, [](const TcpConnPtr &con, Slice msg) { info("recv msg: %.*s", (int) msg.size(), msg.data()); });
+
+    //set callback onState
+    con->onState([=](const TcpConnPtr &con) {
+        info("onState called state: %d", con->getState());
+        if (con->getState() == TcpConn::Connected) {
+            //成功连接后发送hello消息
+            con->sendMsg("hello");
+        }
+    });
+
+    //dispatch loop, connect to 
+    base.loop();
+    
+    info("program exited");
 }

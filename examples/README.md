@@ -8,6 +8,7 @@
 - safe-close.cc 在其他线程中安全操作连接
 - chat.cc 简单的聊天应用，用户使用telnet登陆后，系统分配一个用户id，用户可以发送消息给某个用户，也可以发送消息给所有用户
 - codec-cli.cc 发送消息给服务器，使用的消息格式为mBdT开始，紧接着4字节的长度，然后是消息内容
+    - mBdT： 4byte长度+msg
 - codec-svr.cc 见上
 - hsha.cc 半同步半异步示例，用户可以把IO交给handy框架进行处理，自己同步处理用户请求
 - http-hello.cc 一个简单的http服务器程序
