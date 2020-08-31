@@ -14,7 +14,7 @@
 - codec-svr.cc 见上 [OK]
 - hsha.cc 半同步半异步示例，用户可以把IO交给handy框架进行处理，自己同步处理用户请求 [OK]
     - 比较hsha和非hsha的区别？
-        - 非hsha需要用户处理tcp的状态变更、事件等操作
+        - 非hsha需要用户处理tcp的状态变更、事件等操作 [OK]
 - http-hello.cc 一个简单的http服务器程序
     - MultiBase实现模型
 - stat.cc 一个简单的状态服务器示例，一个内嵌的http服务器，方便外部的工具查看应用程序的状态
