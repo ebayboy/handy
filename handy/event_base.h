@@ -23,6 +23,7 @@ typedef std::function<void(const TcpConnPtr &)> TcpCallBack;
 typedef std::function<void(const TcpConnPtr &, Slice msg)> MsgCallBack;
 
 struct EventBases : private noncopyable {
+    //纯虚函数 virtual xxx = 0, 集成类必须实现此函数
     virtual EventBase *allocBase() = 0;
 };
 
@@ -79,17 +80,22 @@ struct EventBase : public EventBases {
     void safeCall(Task &&task);
     void safeCall(const Task &task) { safeCall(Task(task)); }
     //分配一个事件派发器
-    virtual EventBase *allocBase() { return this; }
+    /** 创建tcp conn或者udp conn时候分配的event base  **/
+    virtual EventBase *allocBase() { return this; }  
 
    public:
     std::unique_ptr<EventsImp> imp_;
 };
 
-//多线程的事件派发器
+//多线程的事件派发器(轮训派发)
 struct MultiBase : public EventBases {
     MultiBase(int sz) : id_(0), bases_(sz) {}
+
+    //实现基类allocBase纯虚函数
     virtual EventBase *allocBase() {
         int c = id_++;
+
+        /** 选择一个event base事件派发器， 轮训： 哈希桶选择算法，  **/
         return &bases_[c % bases_.size()];
     }
     void loop();
@@ -102,6 +108,7 @@ struct MultiBase : public EventBases {
 
    private:
     std::atomic<int> id_;
+    //初始化时确认了vector容易的大小为sz
     std::vector<EventBase> bases_;
 };
 

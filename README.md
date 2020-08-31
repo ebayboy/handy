@@ -2,6 +2,9 @@ handy[![Build Status](https://travis-ci.org/yedf/handy.png)](https://travis-ci.o
 ====
 [English](https://github.com/yedf/handy/blob/master/README-en.md)
 
+## handy设计与实现
+- https://www.cnblogs.com/dayoushen/articles/11560021.html
+
 ## 简洁易用的C++11网络库
 
 ### 多平台支持
