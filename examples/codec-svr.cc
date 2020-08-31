@@ -12,6 +12,8 @@ using namespace handy;
 5. 服务端接收到msg后，解析mbdt， 打印消息， 并将消息返回给客户端
 */
 
+//mBdT格式： 前4字节报文长度， 后面是消息内容;   length(4byte)data;
+
 int main(int argc, const char *argv[]) {
     Logger::getLogger().setLogLevel(Logger::LTRACE);
     EventBase base;
