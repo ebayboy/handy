@@ -34,9 +34,13 @@ int main(int argc, const char *argv[]) {
 
         //发送超过100M,程序退出
         if (sended >= total) {
+          //为什么第一次没有退出, 参考write_out.log
+          //第一次进入state == 3, 设置exit_标志， 下一次事件分发loop清理资源
           int state = con->getState();
           info("xxx: will exit enter! state:[%d]", state);
           con->close(); // con->close -> state change -> onState -> sendcb ->  here again
+
+          //base.exit -> baseimp->exit -> 设置_exit标志  -> 下一次loop清理关闭连接 -> onState -> onstateCallback
           bases.exit();
           info("xxx: will exit leave! state:[%d], conn_state:[%d]", state, con->getState());
         }
