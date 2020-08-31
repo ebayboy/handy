@@ -125,6 +125,8 @@ struct HttpConnPtr {
 typedef HttpConnPtr::HttpCallBack HttpCallBack;
 
 // http服务器
+// 结构体继承 http<-tcpserver
+// 构造函数初始化顺序： tcpserver -> httpserver
 struct HttpServer : public TcpServer {
     HttpServer(EventBases *base);
     template <class Conn = TcpConn>

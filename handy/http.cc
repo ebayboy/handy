@@ -228,6 +228,7 @@ void HttpConnPtr::logOutput(const char *title) const {
     trace("%s:\n%.*s", title, (int) o.size(), o.data());
 }
 
+//构造函数， 父类结构体初始化
 HttpServer::HttpServer(EventBases *bases) : TcpServer(bases) {
     defcb_ = [](const HttpConnPtr &con) {
         HttpResponse &resp = con.getResponse();
