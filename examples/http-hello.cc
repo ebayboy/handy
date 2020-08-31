@@ -35,7 +35,7 @@ int main(int argc, const char *argv[]) {
     //httpserver.onGet
     sample.onGet("/hello", [](const HttpConnPtr &con) {
         string v = con.getRequest().version;
-        info("version:", v);
+        info("version:%s", v.c_str());
         HttpResponse resp;
         resp.body = Slice("hello world");
         con.sendResponse(resp);
