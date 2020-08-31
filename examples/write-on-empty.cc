@@ -23,7 +23,7 @@ int main(int argc, const char *argv[]) {
 
     // lambda sendcb
     auto sendcb = [&](const TcpConnPtr &con) {
-        info("Callback write_buf...[%d]", time++);
+        info("Callback write_buf...[%d]", times++);
         while (con->getOutput().size() == 0 && sended < total) {
             con->send(buf, sizeof buf);
             sended += sizeof buf;
