@@ -9,8 +9,9 @@ char buf[20 * 1024 * 1024];
 static int times = 0;
 
 int main(int argc, const char *argv[]) {
-    setloglevel("TRACE");
-    int sended = 0, total = 1054768 * 100;
+    setloglevel("INFO");
+    
+    int sended = 0, total = 1024 * 1024 * 100; //100M
 
     memset(buf, 'a', sizeof buf);
 
@@ -23,15 +24,21 @@ int main(int argc, const char *argv[]) {
 
     // lambda sendcb
     auto sendcb = [&](const TcpConnPtr &con) {
-        info("Callback write_buf...[%d]", times++);
+        info("Callback write_buf...[%d] state[%d]", times++, con->getState());
+        //如果输出缓冲区没有数据， 且发送长度小区100M，则发送数据
         while (con->getOutput().size() == 0 && sended < total) {
-            con->send(buf, sizeof buf);
+            con->send(buf, sizeof buf); //发送buf 20M
             sended += sizeof buf;
             info("%d bytes sended output size: %lu", sended, con->getOutput().size());
         }
+
+        //发送超过100M,程序退出
         if (sended >= total) {
-            con->close();
-            bases.exit();
+          int state = con->getState();
+          info("xxx: will exit enter! state:[%d]", state);
+          con->close(); // con->close -> state change -> onState -> sendcb ->  here again
+          bases.exit();
+          info("xxx: will exit leave! state:[%d], conn_state:[%d]", state, con->getState());
         }
     };
 
@@ -46,8 +53,8 @@ int main(int argc, const char *argv[]) {
                 //当连接状态变化为  TcpConn::Connected， 设置可写回调函数为sendcb
                 con->onWritable(sendcb);
             }
-
-            info("Direct write_buf...[%d]", times++);
+            
+            info("xxx: state:%d", con->getState());
             sendcb(con);
         });
         return con;
@@ -60,8 +67,11 @@ int main(int argc, const char *argv[]) {
         con->onRead([](const TcpConnPtr &con) {
             info("recv %lu bytes", con->getInput().size());
             con->getInput().clear();
+            //每1秒钟接收一次数据
             sleep(1);
         });
+
+        //设置连接状态变化回调函数， 当server关闭连接时会调用
         con->onState([&](const TcpConnPtr &con) {
             if (con->getState() == TcpConn::Closed || con->getState() == TcpConn::Failed) {
                 base2.exit();

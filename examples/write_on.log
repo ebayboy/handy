@@ -1,0 +1,32 @@
+2020/08/31-18:28:50.180944 53ce INFO handy/poller.cc:41 poller epoll 3 created
+2020/08/31-18:28:50.181208 53ce INFO handy/conn.cc:287 fd 6 listening at 0.0.0.0:2099
+2020/08/31-18:28:50.181397 53cf INFO handy/poller.cc:41 poller epoll 7 created
+2020/08/31-18:28:50.181905 53ce INFO write-on-empty.cc:57 xxx: state:3
+2020/08/31-18:28:50.181923 53ce INFO write-on-empty.cc:27 Callback write_buf...[1] state[3]
+2020/08/31-18:28:50.182195 53cf INFO write-on-empty.cc:68 recv 43776 bytes
+2020/08/31-18:28:50.194998 53ce INFO write-on-empty.cc:32 20971520 bytes sended output size: 16948291
+2020/08/31-18:28:51.210015 53ce INFO write-on-empty.cc:27 Callback write_buf...[3] state[3]
+2020/08/31-18:28:51.225070 53cf INFO write-on-empty.cc:68 recv 21070516 bytes
+2020/08/31-18:28:51.230994 53ce INFO write-on-empty.cc:32 41943040 bytes sended output size: 20828748
+2020/08/31-18:28:52.258427 53ce INFO write-on-empty.cc:27 Callback write_buf...[5] state[3]
+2020/08/31-18:28:52.271791 53cf INFO write-on-empty.cc:68 recv 21478424 bytes
+2020/08/31-18:28:52.274098 53ce INFO write-on-empty.cc:32 62914560 bytes sended output size: 20321844
+2020/08/31-18:28:53.400482 53cf INFO write-on-empty.cc:68 recv 13162083 bytes
+2020/08/31-18:28:53.499057 53ce INFO write-on-empty.cc:27 Callback write_buf...[7] state[3]
+2020/08/31-18:28:53.502636 53ce INFO write-on-empty.cc:32 83886080 bytes sended output size: 19749457
+2020/08/31-18:28:54.408285 53cf INFO write-on-empty.cc:68 recv 13162083 bytes
+2020/08/31-18:28:55.422387 53ce INFO write-on-empty.cc:27 Callback write_buf...[9] state[3]
+2020/08/31-18:28:55.423312 53cf INFO write-on-empty.cc:68 recv 15165647 bytes
+2020/08/31-18:28:55.426978 53ce INFO write-on-empty.cc:32 104857600 bytes sended output size: 16584159
+2020/08/31-18:28:55.427020 53ce INFO write-on-empty.cc:38 xxx: will exit enter! state:[3]
+2020/08/31-18:28:55.427068 53ce INFO write-on-empty.cc:41 xxx: will exit leave! state:[3]
+2020/08/31-18:28:55.427182 53ce INFO write-on-empty.cc:57 xxx: state:4
+2020/08/31-18:28:55.427196 53ce INFO write-on-empty.cc:27 Callback write_buf...[11] state[4]
+2020/08/31-18:28:55.427202 53ce INFO write-on-empty.cc:38 xxx: will exit enter! state:[4]
+2020/08/31-18:28:55.427219 53ce INFO write-on-empty.cc:41 xxx: will exit leave! state:[4]
+2020/08/31-18:28:56.425046 53cf INFO write-on-empty.cc:68 recv 4190912 bytes
+2020/08/31-18:28:57.425755 53cf INFO handy/poller.cc:45 destroying poller 7
+2020/08/31-18:28:57.425792 53cf INFO handy/poller.cc:50 poller 7 destroyed
+2020/08/31-18:28:57.425889 53ce INFO write-on-empty.cc:85 program exited
+2020/08/31-18:28:57.425923 53ce INFO handy/poller.cc:45 destroying poller 3
+2020/08/31-18:28:57.425933 53ce INFO handy/poller.cc:50 poller 3 destroyed
