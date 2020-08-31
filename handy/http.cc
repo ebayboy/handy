@@ -242,6 +242,7 @@ HttpServer::HttpServer(EventBases *bases) : TcpServer(bases) {
         HttpConnPtr hcon(conncb_());
         hcon.onHttpMsg([this](const HttpConnPtr &hcon) {
             HttpRequest &req = hcon.getRequest();
+            trace("method:[%s] uri:[%s]:", req.method.c_str(), req.uri.c_str());
             auto p = cbs_.find(req.method);
             if (p != cbs_.end()) {
                 auto p2 = p->second.find(req.uri);
