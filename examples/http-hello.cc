@@ -21,6 +21,7 @@ int main(int argc, const char *argv[]) {
     //绑定get回调函数
     sample.onGet("/hello", [](const HttpConnPtr &con) {
         string v = con.getRequest().version;
+        info("version:", v);
         HttpResponse resp;
         resp.body = Slice("hello world");
         con.sendResponse(resp);
