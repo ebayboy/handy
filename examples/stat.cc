@@ -7,6 +7,8 @@ using namespace handy;
 int main(int argc, const char *argv[]) {
     Logger::getLogger().setLogLevel("DEBUG");
     EventBase base;
+
+    //statserver -> inline httpserver
     StatServer sample(&base);
     int r = sample.bind("", 80);
     exitif(r, "bind failed %d %s", errno, strerror(errno));
