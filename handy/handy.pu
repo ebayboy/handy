@@ -1,0 +1,32 @@
+@startuml
+
+
+class HttpMsg { }
+class HttpRequest  {}
+class HttpResponse {}
+class HttpConnPtr {}
+class HttpContext {}
+class HttpServer  {}
+class HSHA {}
+class TcpConn {}
+class TcpServer {}
+class Channel {}
+class EventBase  {}
+abstract class EventBases  {
+    {abstract} EventBase *allocBase() = 0;
+}
+class MultiBase {}
+class AutoContext { }
+class CodecBase {}
+class LineCodec {}
+class LengthCodec {}
+
+LineCodec --|> CodecBase
+LengthCodec --|> CodecBase
+EventBase --|> EventBases
+MultiBase --|> EventBases
+HttpRequest --|> HttpMsg
+HttpResponse --|> HttpMsg
+HttpServer --|> TcpServer
+
+@enduml
