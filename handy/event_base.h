@@ -7,6 +7,8 @@
 #include "handy-imp.h"
 #include "poller.h"
 
+namespace handy {
+
 #ifdef NDEBUG 
 #define DD()
 #else
@@ -14,8 +16,6 @@
   std::cout <<__func__ << ":" << __LINE__ << std::endl; \
 } while (0)
 #endif
-
-namespace handy {
 
 typedef std::shared_ptr<TcpConn> TcpConnPtr;
 typedef std::shared_ptr<TcpServer> TcpServerPtr;
