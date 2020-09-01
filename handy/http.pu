@@ -1,0 +1,17 @@
+@startuml
+
+
+class HttpMsg { }
+class HttpRequest  {}
+class HttpResponse {}
+class HttpConnPtr {}
+class HttpContext {}
+class HttpServer  {}
+
+HttpRequest --|> HttpMsg
+
+HttpResponse --|> HttpMsg
+
+HttpServer --|> TcpServer
+
+@enduml

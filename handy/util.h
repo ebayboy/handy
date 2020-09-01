@@ -35,8 +35,11 @@ struct util {
 };
 
 struct ExitCaller : private noncopyable {
-    ~ExitCaller() { functor_(); }
+    //构造函数
     ExitCaller(std::function<void()> &&functor) : functor_(std::move(functor)) {}
+
+    //析构函数
+    ~ExitCaller() { functor_(); }
 
    private:
     std::function<void()> functor_;

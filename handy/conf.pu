@@ -1,0 +1,9 @@
+@startuml
+
+class Conf {
+    int parse()
+    string get()
+
+}
+
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+
+class CodecBase {}
+class LineCodec {}
+class LengthCodec {}
+
+LineCodec --|> CodecBase
+
+LengthCodec --|> CodecBase
+
+@enduml

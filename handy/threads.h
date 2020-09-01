@@ -12,6 +12,7 @@
 namespace handy {
 
 template <typename T>
+//TODO ? drived from std::mutex ?
 struct SafeQueue : private std::mutex, private noncopyable {
     static const int wait_infinite = std::numeric_limits<int>::max();
     // 0 不限制队列中的任务数

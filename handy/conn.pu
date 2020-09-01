@@ -1,0 +1,15 @@
+@startuml
+
+class HSHA {
+
+}
+
+class TcpConn {
+
+}
+
+class TcpServer {
+
+}
+
+@enduml
