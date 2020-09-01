@@ -1,5 +1,0 @@
-@startuml
-
-class AutoContext { }
-
-@enduml
