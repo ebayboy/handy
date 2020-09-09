@@ -73,13 +73,13 @@ int main(int argc, const char* argv[]) {
 
 ### 目录结构
 
-*   handy--------handy库
-*   10m----------进行千万并发连接测试所使用的程序
-*   examples----示例
+*   handy--------handy库 [ok]
+*   examples----示例 [ok]
 *   raw-examples--原生api使用示例，包括了epoll，epoll ET模式，kqueue示例
-*   ssl------------openssl相关的代码与示例  
 *   protobuf-----handy使用protobuf的示例  
+*   ssl------------openssl相关的代码与示例  
 *   test-----------handy相关的测试  
+*   10m----------进行千万并发连接测试所使用的程序
 
 ### [使用文档](https://github.com/yedf/handy/blob/master/doc.md)
 

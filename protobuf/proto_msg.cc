@@ -60,7 +60,7 @@ void ProtoMsgCodec::encode(Message *msg, Buffer &buf) {
     const string &typeName = msg->GetDescriptor()->full_name();
     buf.appendValue((uint32_t) typeName.size());
     buf.append(typeName.data(), typeName.size());
-    msg->SerializeToArray(buf.allocRoom(msg->ByteSize()), msg->ByteSize());
+    msg->SerializeToArray(buf.allocRoom(msg->ByteSizeLong()), msg->ByteSizeLong());
     *(uint32_t *) (buf.begin() + offset) = buf.size() - offset;
 }
 

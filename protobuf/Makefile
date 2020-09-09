@@ -3,10 +3,10 @@
 OPT ?= -g2
 # (C) Profiling mode: opt, but w/debugging symbols
 # OPT ?= -O2 -g2 -DNDEBUG
-include ../config.mk
+#include ../config.mk
 
 CFLAGS += -I.. $(PLATFORM_CCFLAGS) $(OPT)
-CXXFLAGS += -I.. $(PLATFORM_CXXFLAGS) $(OPT)
+CXXFLAGS += -I.. $(PLATFORM_CXXFLAGS) $(OPT) -I /usr/local/protobuf/include
 
 LDFLAGS += $(PLATFORM_LDFLAGS)
 LIBS += $(PLATFORM_LIBS)
@@ -21,7 +21,7 @@ PROGRAMS = test
 default: $(PROGRAMS)
 
 $(PROGRAMS): $(OBJS)
-	$(CXX) -o $@ $^ msg.pb.cc $(LDFLAGS) `pkg-config --libs protobuf` -lhandy
+	$(CXX) -o $@ $^ msg.pb.cc $(LDFLAGS) -I /usr/local/protobuf/include/ ../libhandy.a /usr/local/protobuf/lib/libprotobuf.a ../libhandy.a  -lpthread
 
 $(OBJS): middle
 
@@ -34,7 +34,7 @@ clean:
 	-rm -f *.o *.pb.*
 
 .cc.o:
-	$(CXX) $(CXXFLAGS) -c $< -o $@ `pkg-config --cflags protobuf`
+	$(CXX) $(CXXFLAGS) -c $< -o $@ 
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
