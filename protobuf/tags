@@ -1,0 +1,134 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+-cpp_out	Makefile	/^	protoc --cpp_out=. $<$/;"	m
+ArenaDtor	msg.pb.cc	/^void Query::ArenaDtor(void* object) {$/;"	f	class:handy::Query
+ByteSizeLong	msg.pb.cc	/^size_t Query::ByteSizeLong() const {$/;"	f	class:handy::Query
+CHK_	msg.pb.cc	166;"	d	file:
+CHK_	msg.pb.cc	213;"	d	file:
+Clear	msg.pb.cc	/^void Query::Clear() {$/;"	f	class:handy::Query
+CopyFrom	msg.pb.cc	/^void Query::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {$/;"	f	class:handy::Query
+CopyFrom	msg.pb.cc	/^void Query::CopyFrom(const Query& from) {$/;"	f	class:handy::Query
+CreateMaybeMessage	msg.pb.cc	/^template<> PROTOBUF_NOINLINE ::handy::Query* Arena::CreateMaybeMessage< ::handy::Query >(Arena* arena) {$/;"	f	class:Arena
+Descriptor	proto_msg.h	/^typedef ::google::protobuf::Descriptor Descriptor;$/;"	t	namespace:handy
+DestructorSkippable_	msg.pb.h	/^  typedef void DestructorSkippable_;$/;"	t	class:handy::PROTOBUF_FINAL
+FullMessageName	msg.pb.h	/^  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {$/;"	f	class:handy::PROTOBUF_FINAL
+GOOGLE_PROTOBUF_INCLUDED_msg_2eproto	msg.pb.h	5;"	d
+GetDescriptor	msg.pb.h	/^  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {$/;"	f	class:handy::PROTOBUF_FINAL
+GetMetadata	msg.pb.cc	/^::PROTOBUF_NAMESPACE_ID::Metadata Query::GetMetadata() const {$/;"	f	class:handy::Query
+GetMetadataStatic	msg.pb.h	/^  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {$/;"	f	class:handy::PROTOBUF_FINAL
+GetReflection	msg.pb.h	/^  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {$/;"	f	class:handy::PROTOBUF_FINAL
+InitAsDefaultInstance	msg.pb.cc	/^void Query::InitAsDefaultInstance() {$/;"	f	class:handy::Query
+InitDefaultsscc_info_Query_msg_2eproto	msg.pb.cc	/^static void InitDefaultsscc_info_Query_msg_2eproto() {$/;"	f	file:
+InternalArenaConstructable_	msg.pb.h	/^  typedef void InternalArenaConstructable_;$/;"	t	class:handy::PROTOBUF_FINAL
+InternalSwap	msg.pb.cc	/^void Query::InternalSwap(Query* other) {$/;"	f	class:handy::Query
+IsInitialized	msg.pb.cc	/^bool Query::IsInitialized() const {$/;"	f	class:handy::Query
+MergeFrom	msg.pb.cc	/^void Query::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {$/;"	f	class:handy::Query
+MergeFrom	msg.pb.cc	/^void Query::MergeFrom(const Query& from) {$/;"	f	class:handy::Query
+Message	proto_msg.h	/^typedef ::google::protobuf::Message Message;$/;"	t	namespace:handy
+MissingRequiredFields	msg.pb.cc	/^  static bool MissingRequiredFields(const HasBits& has_bits) {$/;"	f	class:handy::Query::_Internal
+OBJS	Makefile	/^OBJS = $(SOURCES:.cc=.o)$/;"	m
+OPT	Makefile	/^OPT ?= -g2$/;"	m
+PROGRAMS	Makefile	/^PROGRAMS = test$/;"	m
+PROTOBUF_FINAL	msg.pb.h	/^class Query PROTOBUF_FINAL :$/;"	c	namespace:handy
+PROTOBUF_INTERNAL_EXPORT_msg_2eproto	msg.pb.h	37;"	d
+ProtoCallBack	proto_msg.h	/^typedef std::function<void(TcpConnPtr con, Message *msg)> ProtoCallBack;$/;"	t	namespace:handy
+ProtoMsgCodec	proto_msg.h	/^struct ProtoMsgCodec {$/;"	s	namespace:handy
+ProtoMsgDispatcher	proto_msg.h	/^struct ProtoMsgDispatcher {$/;"	s	namespace:handy
+Query	msg.pb.cc	/^Query::Query(::PROTOBUF_NAMESPACE_ID::Arena* arena)$/;"	f	class:handy::Query
+Query	msg.pb.cc	/^Query::Query(const Query& from)$/;"	f	class:handy::Query
+Query	msg.pb.h	/^    : Query() {$/;"	f	class:handy::PROTOBUF_FINAL
+Query	msg.pb.h	/^  inline Query() : Query(nullptr) {}$/;"	f	class:handy::PROTOBUF_FINAL
+QueryDefaultTypeInternal	msg.pb.cc	/^class QueryDefaultTypeInternal {$/;"	c	namespace:handy	file:
+RegisterArenaDtor	msg.pb.cc	/^void Query::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {$/;"	f	class:handy::Query
+RequiredFieldsByteSizeFallback	msg.pb.cc	/^size_t Query::RequiredFieldsByteSizeFallback() const {$/;"	f	class:handy::Query
+SOURCES	Makefile	/^SOURCES=proto_msg.cc test.cc $/;"	m
+SetCachedSize	msg.pb.cc	/^void Query::SetCachedSize(int size) const {$/;"	f	class:handy::Query
+SharedCtor	msg.pb.cc	/^void Query::SharedCtor() {$/;"	f	class:handy::Query
+SharedDtor	msg.pb.cc	/^void Query::SharedDtor() {$/;"	f	class:handy::Query
+Swap	msg.pb.h	/^  inline void Swap(Query* other) {$/;"	f	class:handy::PROTOBUF_FINAL
+TableStruct_msg_2eproto	msg.pb.h	/^struct TableStruct_msg_2eproto {$/;"	s
+UnsafeArenaSwap	msg.pb.h	/^  void UnsafeArenaSwap(Query* other) {$/;"	f	class:handy::PROTOBUF_FINAL
+_Internal	msg.pb.cc	/^class Query::_Internal {$/;"	c	class:handy::Query	file:
+_InternalParse	msg.pb.cc	/^const char* Query::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {$/;"	f	class:handy::Query
+_InternalSerialize	msg.pb.cc	/^::PROTOBUF_NAMESPACE_ID::uint8* Query::_InternalSerialize($/;"	f	class:handy::Query
+_Query_default_instance_	msg.pb.cc	/^} _Query_default_instance_;$/;"	m	namespace:handy	typeref:class:handy::QueryDefaultTypeInternal	file:
+_cached_size_	msg.pb.h	/^  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;$/;"	m	class:handy::PROTOBUF_FINAL
+_has_bits_	msg.pb.h	/^  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;$/;"	m	class:handy::PROTOBUF_FINAL
+_instance	msg.pb.cc	/^  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<Query> _instance;$/;"	m	class:handy::QueryDefaultTypeInternal	file:
+_internal_has_id	msg.pb.h	/^inline bool Query::_internal_has_id() const {$/;"	f	class:handy::Query
+_internal_has_name	msg.pb.h	/^inline bool Query::_internal_has_name() const {$/;"	f	class:handy::Query
+_internal_id	msg.pb.h	/^inline ::PROTOBUF_NAMESPACE_ID::int32 Query::_internal_id() const {$/;"	f	class:handy::Query
+_internal_mutable_name	msg.pb.h	/^inline std::string* Query::_internal_mutable_name() {$/;"	f	class:handy::Query
+_internal_name	msg.pb.h	/^inline const std::string& Query::_internal_name() const {$/;"	f	class:handy::Query
+_internal_set_id	msg.pb.h	/^inline void Query::_internal_set_id(::PROTOBUF_NAMESPACE_ID::int32 value) {$/;"	f	class:handy::Query
+_internal_set_name	msg.pb.h	/^inline void Query::_internal_set_name(const std::string& value) {$/;"	f	class:handy::Query
+clear_id	msg.pb.h	/^inline void Query::clear_id() {$/;"	f	class:handy::Query
+clear_name	msg.pb.h	/^inline void Query::clear_name() {$/;"	f	class:handy::Query
+decode	proto_msg.cc	/^Message *ProtoMsgCodec::decode(Buffer &s) {$/;"	f	class:handy::ProtoMsgCodec
+default_instance	msg.pb.cc	/^const Query& Query::default_instance() {$/;"	f	class:handy::Query
+descriptor	msg.pb.h	/^  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {$/;"	f	class:handy::PROTOBUF_FINAL
+descriptor_table_msg_2eproto	msg.pb.cc	/^const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_msg_2eproto = {$/;"	v
+descriptor_table_msg_2eproto_deps	msg.pb.cc	/^static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_msg_2eproto_deps[1] = {$/;"	m	class:PROTOBUF_NAMESPACE_ID::internal	file:
+descriptor_table_msg_2eproto_once	msg.pb.cc	/^static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_msg_2eproto_once;$/;"	v	file:
+descriptor_table_msg_2eproto_sccs	msg.pb.cc	/^static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_msg_2eproto_sccs[1] = {$/;"	m	class:PROTOBUF_NAMESPACE_ID::internal	file:
+dynamic_init_dummy_msg_2eproto	msg.pb.cc	/^static bool dynamic_init_dummy_msg_2eproto = (static_cast<void>(::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_msg_2eproto)), true);$/;"	v	file:
+encode	proto_msg.cc	/^void ProtoMsgCodec::encode(Message *msg, Buffer &buf) {$/;"	f	class:handy::ProtoMsgCodec
+field_metadata	msg.pb.h	/^  static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];$/;"	m	struct:TableStruct_msg_2eproto
+file_default_instances	msg.pb.cc	/^static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {$/;"	m	class:PROTOBUF_NAMESPACE_ID	file:
+file_level_enum_descriptors_msg_2eproto	msg.pb.cc	/^static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_msg_2eproto = nullptr;$/;"	m	class:constexpr::PROTOBUF_NAMESPACE_ID	file:
+file_level_metadata_msg_2eproto	msg.pb.cc	/^static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_msg_2eproto[1];$/;"	v	file:
+file_level_service_descriptors_msg_2eproto	msg.pb.cc	/^static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_msg_2eproto = nullptr;$/;"	m	class:constexpr::PROTOBUF_NAMESPACE_ID	file:
+final	msg.pb.h	/^      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;$/;"	m	class:handy::PROTOBUF_FINAL
+final	msg.pb.h	/^  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;$/;"	m	class:handy::PROTOBUF_FINAL
+final	msg.pb.h	/^  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;$/;"	m	class:handy::PROTOBUF_FINAL
+final	msg.pb.h	/^  bool IsInitialized() const final;$/;"	m	class:handy::PROTOBUF_FINAL
+final	msg.pb.h	/^  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;$/;"	m	class:handy::PROTOBUF_FINAL
+final	msg.pb.h	/^  size_t ByteSizeLong() const final;$/;"	m	class:handy::PROTOBUF_FINAL
+final	msg.pb.h	/^  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;$/;"	m	class:handy::PROTOBUF_FINAL
+final	msg.pb.h	/^  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;$/;"	m	class:handy::PROTOBUF_FINAL
+final	msg.pb.h	/^  void SetCachedSize(int size) const final;$/;"	m	class:handy::PROTOBUF_FINAL
+handle	proto_msg.cc	/^void ProtoMsgDispatcher::handle(TcpConnPtr con, Message *msg) {$/;"	f	class:handy::ProtoMsgDispatcher
+handleQuery	test.cc	/^void handleQuery(TcpConnPtr con, Query *query) {$/;"	f
+handy	msg.pb.cc	/^namespace handy {$/;"	n	file:
+handy	msg.pb.h	/^namespace handy {$/;"	n
+handy	proto_msg.cc	/^namespace handy {$/;"	n	file:
+handy	proto_msg.h	/^namespace handy {$/;"	n
+has_id	msg.pb.h	/^inline bool Query::has_id() const {$/;"	f	class:handy::Query
+has_name	msg.pb.h	/^inline bool Query::has_name() const {$/;"	f	class:handy::Query
+id	msg.pb.h	/^inline ::PROTOBUF_NAMESPACE_ID::int32 Query::id() const {$/;"	f	class:handy::Query
+id_	msg.pb.h	/^  ::PROTOBUF_NAMESPACE_ID::int32 id_;$/;"	m	class:handy::PROTOBUF_FINAL
+internal	msg.pb.h	/^namespace internal {$/;"	n
+internal_default_instance	msg.pb.h	/^  static inline const Query* internal_default_instance() {$/;"	f	class:handy::PROTOBUF_FINAL
+kIndexInFileMessages	msg.pb.h	/^  static constexpr int kIndexInFileMessages =$/;"	m	class:handy::PROTOBUF_FINAL
+main	test.cc	/^int main() {$/;"	f
+msgComplete	proto_msg.h	/^inline bool ProtoMsgCodec::msgComplete(Buffer &buf) {$/;"	f	class:handy::ProtoMsgCodec
+mutable_name	msg.pb.h	/^inline std::string* Query::mutable_name() {$/;"	f	class:handy::Query
+mutable_unknown_fields	msg.pb.h	/^  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {$/;"	f	class:handy::PROTOBUF_FINAL
+name	msg.pb.h	/^inline const std::string& Query::name() const {$/;"	f	class:handy::Query
+name_	msg.pb.h	/^  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;$/;"	m	class:handy::PROTOBUF_FINAL
+offsets	msg.pb.h	/^  static const ::PROTOBUF_NAMESPACE_ID::uint32 offsets[];$/;"	m	struct:TableStruct_msg_2eproto
+onMsg	proto_msg.h	/^    void onMsg(std::function<void(TcpConnPtr con, M *msg)> cb) {$/;"	f	struct:handy::ProtoMsgDispatcher
+operator =	msg.pb.h	/^  inline Query& operator=(const Query& from) {$/;"	f	class:handy::PROTOBUF_FINAL
+protocbs_	proto_msg.h	/^    std::map<const Descriptor *, ProtoCallBack> protocbs_;$/;"	m	struct:handy::ProtoMsgDispatcher
+protodesc_cold	msg.pb.cc	/^const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_msg_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {$/;"	v
+protodesc_cold	msg.pb.cc	/^const char descriptor_table_protodef_msg_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =$/;"	v
+protodesc_cold	msg.pb.cc	/^static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {$/;"	v	file:
+release_name	msg.pb.h	/^inline std::string* Query::release_name() {$/;"	f	class:handy::Query
+scc_info_Query_msg_2eproto	msg.pb.cc	/^::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Query_msg_2eproto =$/;"	v
+serialization_table	msg.pb.h	/^  static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];$/;"	m	struct:TableStruct_msg_2eproto
+set_allocated_name	msg.pb.h	/^inline void Query::set_allocated_name(std::string* name) {$/;"	f	class:handy::Query
+set_has_id	msg.pb.cc	/^  static void set_has_id(HasBits* has_bits) {$/;"	f	class:handy::Query::_Internal
+set_has_name	msg.pb.cc	/^  static void set_has_name(HasBits* has_bits) {$/;"	f	class:handy::Query::_Internal
+set_id	msg.pb.h	/^inline void Query::set_id(::PROTOBUF_NAMESPACE_ID::int32 value) {$/;"	f	class:handy::Query
+set_name	msg.pb.h	/^inline void Query::set_name(const char* value) {$/;"	f	class:handy::Query
+set_name	msg.pb.h	/^inline void Query::set_name(const char* value,$/;"	f	class:handy::Query
+set_name	msg.pb.h	/^inline void Query::set_name(const std::string& value) {$/;"	f	class:handy::Query
+set_name	msg.pb.h	/^inline void Query::set_name(std::string&& value) {$/;"	f	class:handy::Query
+swap	msg.pb.h	/^  friend void swap(Query& a, Query& b) {$/;"	f	class:handy::PROTOBUF_FINAL
+testencode	test.cc	/^void testencode() {$/;"	f
+unknown_fields	msg.pb.h	/^  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {$/;"	f	class:handy::PROTOBUF_FINAL
+~Query	msg.pb.cc	/^Query::~Query() {$/;"	f	class:handy::Query
