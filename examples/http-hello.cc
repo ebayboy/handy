@@ -38,14 +38,14 @@ int main(int argc, const char *argv[]) {
         handy::HttpRequest req = con.getRequest();
         for (auto &&i : req.args)
         {
-            info("args: %s:%s", i.first(), i.second());
+            info("args: %s:%s", i.first.c_str(), i.second.c_str());
         }
-        info("method:%s uri:%s queri_uri:%s", req.method, req.uri, req.query_uri);
+        info("method:%s uri:%s queri_uri:%s", req.method.c_str(), req.uri.c_str(), req.query_uri.c_str());
 
         //show headers
         for (auto &&h : req.headers)
         {
-            info("header: %s:%s", h.first(), h.second());
+            info("header: %s:%s", h.first.c_str(), h.second.c_str());
         }
         
         string v = req.version;

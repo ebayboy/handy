@@ -22,6 +22,7 @@ string HttpMsg::getValueFromMap_(map<string, string> &m, const string &n) {
     return p == m.end() ? "" : p->second;
 }
 
+//解析http报文
 HttpMsg::Result HttpMsg::tryDecode_(Slice buf, bool copyBody, Slice *line1) {
     if (complete_) {
         return Complete;
