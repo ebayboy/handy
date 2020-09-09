@@ -5,7 +5,6 @@ handy.*
 a*
 *.mk
 *.pb.*
-ssl
 openssl-example
 */*.dSYM
 .*
