@@ -34,7 +34,21 @@ int main(int argc, const char *argv[]) {
     //绑定get回调函数
     //httpserver.onGet
     sample.onGet("/hello", [](const HttpConnPtr &con) {
-        string v = con.getRequest().version;
+
+        handy::HttpRequest req = con.getRequest();
+        for (auto &&i : req.args)
+        {
+            info("args: %s:%s", i.first(), i.second());
+        }
+        info("method:%s uri:%s queri_uri:%s", req.method, req.uri, req.query_uri);
+
+        //show headers
+        for (auto &&h : req.headers)
+        {
+            info("header: %s:%s", h.first(), h.second());
+        }
+        
+        string v = req.version;
         info("version:%s", v.c_str());
         HttpResponse resp;
         resp.body = Slice("hello world");
