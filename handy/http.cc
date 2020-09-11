@@ -231,7 +231,8 @@ void HttpConnPtr::logOutput(const char *title) const {
 
 //构造函数， 父类结构体初始化
 HttpServer::HttpServer(EventBases *bases) : TcpServer(bases) {
-    // set HttpCallBack
+    // defcb_: send response
+    // set HttpCallBack ,
     defcb_ = [](const HttpConnPtr &con) {
         HttpResponse &resp = con.getResponse();
         resp.status = 404;
@@ -251,26 +252,27 @@ HttpServer::HttpServer(EventBases *bases) : TcpServer(bases) {
         HttpConnPtr hcon(conncb_());
 
         // set httpcon-> onHttpMsg(lambada)
-        //typedef std::function<void(const HttpConnPtr &)> HttpCallBack;
+        // typedef std::function<void(const HttpConnPtr &)> HttpCallBack;
         hcon.onHttpMsg(
             // lambda捕获this指针(HttpServer)
             [this](const HttpConnPtr &hcon) {
-                //TODO? getRequest 处理流程？
+                // TODO ? getRequest 处理流程？ tcp->internalCtx_.context
+                // ?? what time set internalCtx_ ?
                 HttpRequest &req = hcon.getRequest();
                 trace("method:[%s] uri:[%s]:", req.method.c_str(), req.uri.c_str());
-                // TODO ?
-                auto p = cbs_.find(req.method);
+                auto p = cbs_.find(req.method);  // find method
                 if (p != cbs_.end()) {
-                    auto p2 = p->second.find(req.uri);
+                    auto p2 = p->second.find(req.uri);  // find uri
                     if (p2 != p->second.end()) {
-                        p2->second(hcon);
+                        p2->second(hcon);  // uri->callback
                         return;
                     }
                 }
-                // set httpcallback
+
+                // send response to client
                 defcb_(hcon);
             });
-        return hcon.tcp;
+        return hcon.tcp;  // TcpConnPtr
     });
 }
 

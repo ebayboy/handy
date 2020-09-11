@@ -140,7 +140,10 @@ struct HttpServer : public TcpServer {
    private:
     HttpCallBack defcb_;
     std::function<TcpConnPtr()> conncb_;
-    std::map<std::string, std::map<std::string, HttpCallBack>> cbs_; //cbs_[method][uri] = cb;
+
+    //cbs_[method][uri] = cb;
+    // 函数原型：std::map<method, uri, HttpCallBack>>
+    std::map<std::string, std::map<std::string, HttpCallBack>> cbs_;  //方法回调函数
 };
 
 }  // namespace handy
