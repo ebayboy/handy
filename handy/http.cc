@@ -231,6 +231,7 @@ void HttpConnPtr::logOutput(const char *title) const {
 
 //构造函数， 父类结构体初始化
 HttpServer::HttpServer(EventBases *bases) : TcpServer(bases) {
+    // set HttpCallBack
     defcb_ = [](const HttpConnPtr &con) {
         HttpResponse &resp = con.getResponse();
         resp.status = 404;
@@ -238,22 +239,37 @@ HttpServer::HttpServer(EventBases *bases) : TcpServer(bases) {
         resp.body = "Not Found";
         con.sendResponse();
     };
+
+    // set conncallback
+    // typedef std::shared_ptr<TcpConn> TcpConnPtr;
     conncb_ = [] { return TcpConnPtr(new TcpConn); };
+
+    // on tcp conncreate
     onConnCreate([this]() {
+        // create httpconn
+        // lambda作为函数参数， 会将执行结果作为实际参数传递
         HttpConnPtr hcon(conncb_());
-        hcon.onHttpMsg([this](const HttpConnPtr &hcon) {
-            HttpRequest &req = hcon.getRequest();
-            trace("method:[%s] uri:[%s]:", req.method.c_str(), req.uri.c_str());
-            auto p = cbs_.find(req.method);
-            if (p != cbs_.end()) {
-                auto p2 = p->second.find(req.uri);
-                if (p2 != p->second.end()) {
-                    p2->second(hcon);
-                    return;
+
+        // set httpcon-> onHttpMsg(lambada)
+        //typedef std::function<void(const HttpConnPtr &)> HttpCallBack;
+        hcon.onHttpMsg(
+            // lambda捕获this指针(HttpServer)
+            [this](const HttpConnPtr &hcon) {
+                //TODO? getRequest 处理流程？
+                HttpRequest &req = hcon.getRequest();
+                trace("method:[%s] uri:[%s]:", req.method.c_str(), req.uri.c_str());
+                // TODO ?
+                auto p = cbs_.find(req.method);
+                if (p != cbs_.end()) {
+                    auto p2 = p->second.find(req.uri);
+                    if (p2 != p->second.end()) {
+                        p2->second(hcon);
+                        return;
+                    }
                 }
-            }
-            defcb_(hcon);
-        });
+                // set httpcallback
+                defcb_(hcon);
+            });
         return hcon.tcp;
     });
 }

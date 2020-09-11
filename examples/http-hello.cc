@@ -24,6 +24,8 @@ int main(int argc, const char *argv[]) {
     // base传递路径： multibase -> EventBase -> TcpServer -> bases->allocBase() （此处是multibase的allocBase构造函数)
     // TODO ? httpserver -> tcpserver的关系
     // 1. httpserver -> tcpserver 
+
+    //httpserver constructor do more...
     HttpServer sample(&base);
 
     //绑定http服务端口
@@ -32,9 +34,8 @@ int main(int argc, const char *argv[]) {
     exitif(r, "bind failed %d %s", errno, strerror(errno));
 
     //绑定get回调函数
-    //httpserver.onGet
+    //httpserver.onGet("uri", lambada func)
     sample.onGet("/hello", [](const HttpConnPtr &con) {
-
         handy::HttpRequest req = con.getRequest();
         for (auto &&i : req.args)
         {
@@ -47,7 +48,7 @@ int main(int argc, const char *argv[]) {
         {
             info("header: %s:%s", h.first.c_str(), h.second.c_str());
         }
-        
+
         string v = req.version;
         info("version:%s", v.c_str());
         HttpResponse resp;
