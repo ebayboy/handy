@@ -246,6 +246,8 @@ HttpServer::HttpServer(EventBases *bases) : TcpServer(bases) {
     conncb_ = [] { return TcpConnPtr(new TcpConn); };
 
     // on tcp conncreate
+    // conn创建的时候，创建一个httpconn， 之后设置httpmsg回调函数
+    // tcp子类tcpserver的onConnCreate(lambda func cb_), 设置回调函数 createcb_
     onConnCreate([this]() {
         // create httpconn
         // lambda作为函数参数， 会将执行结果作为实际参数传递
@@ -272,6 +274,7 @@ HttpServer::HttpServer(EventBases *bases) : TcpServer(bases) {
                 // send response to client
                 defcb_(hcon);
             });
+        //返回tcp连接对象
         return hcon.tcp;  // TcpConnPtr
     });
 }
