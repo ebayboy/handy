@@ -4,7 +4,6 @@
 #include <netinet/tcp.h>
 #include <sys/socket.h>
 #include <string>
-#include <cstring>
 #include "logging.h"
 #include "util.h"
 
@@ -114,8 +113,8 @@ Buffer &Buffer::absorb(Buffer &buf) {
         if (size() == 0) {
             char b[sizeof buf];
             memcpy(b, this, sizeof b);
-            memcpy((void *)this, &buf, sizeof b);
-            memcpy((void *)&buf, b, sizeof b);
+            memcpy(this, &buf, sizeof b);
+            memcpy(&buf, b, sizeof b);
             std::swap(exp_, buf.exp_);  // keep the origin exp_
         } else {
             append(buf.begin(), buf.size());

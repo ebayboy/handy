@@ -1,21 +1,8 @@
 #pragma once
-
-#include <cstdlib>
-#include <cstdarg>
-#include <iostream>
-
 #include "handy-imp.h"
 #include "poller.h"
 
 namespace handy {
-
-#ifdef NDEBUG 
-#define DD()
-#else
-#define DD() do {                           \
-  std::cout <<__func__ << ":" << __LINE__ << std::endl; \
-} while (0)
-#endif
 
 typedef std::shared_ptr<TcpConn> TcpConnPtr;
 typedef std::shared_ptr<TcpServer> TcpServerPtr;
@@ -23,7 +10,6 @@ typedef std::function<void(const TcpConnPtr &)> TcpCallBack;
 typedef std::function<void(const TcpConnPtr &, Slice msg)> MsgCallBack;
 
 struct EventBases : private noncopyable {
-    //纯虚函数 virtual xxx = 0, 集成类必须实现此函数
     virtual EventBase *allocBase() = 0;
 };
 
@@ -39,34 +25,10 @@ struct EventBase : public EventBases {
     //取消定时任务，若timer已经过期，则忽略
     bool cancel(TimerId timerid);
     //添加定时任务，interval=0表示一次性任务，否则为重复任务，时间为毫秒
-    
-    //runAt2  runAt(, const std::function & task,)
-    TimerId runAt(int64_t milli, const Task &task, int64_t interval = 0) 
-    { 
-      DD();
-      return runAt(milli, Task(task), interval); 
-    }
-
-    //Base: runAt1
+    TimerId runAt(int64_t milli, const Task &task, int64_t interval = 0) { return runAt(milli, Task(task), interval); }
     TimerId runAt(int64_t milli, Task &&task, int64_t interval = 0);
-
-    //runAfter1
-    //typedef std::function<void()> Task &task;
-    TimerId runAfter(int64_t milli, const Task &task, int64_t interval = 0) 
-    { 
-      DD();
-      return runAt(util::timeMilli() + milli, Task(task), interval); 
-    }
-
-    //runAfter2
-    //typedef std::function<void()> Task &&task;
-    //将std:move(task), 调用Task(task)函数，对引用类型的task使用std:move减少拷贝消耗, std:move(task)
-    TimerId runAfter(int64_t milli, Task &&task, int64_t interval = 0) 
-    { 
-      DD();
-      //runAt(,std::function && task,)
-      return runAt(util::timeMilli() + milli, std::move(task), interval); 
-    }
+    TimerId runAfter(int64_t milli, const Task &task, int64_t interval = 0) { return runAt(util::timeMilli() + milli, Task(task), interval); }
+    TimerId runAfter(int64_t milli, Task &&task, int64_t interval = 0) { return runAt(util::timeMilli() + milli, std::move(task), interval); }
 
     //下列函数为线程安全的
 
@@ -80,22 +42,17 @@ struct EventBase : public EventBases {
     void safeCall(Task &&task);
     void safeCall(const Task &task) { safeCall(Task(task)); }
     //分配一个事件派发器
-    /** 创建tcp conn或者udp conn时候分配的event base  **/
-    virtual EventBase *allocBase() { return this; }  
+    virtual EventBase *allocBase() { return this; }
 
    public:
     std::unique_ptr<EventsImp> imp_;
 };
 
-//多线程的事件派发器(轮训派发)
+//多线程的事件派发器
 struct MultiBase : public EventBases {
     MultiBase(int sz) : id_(0), bases_(sz) {}
-
-    //实现基类allocBase纯虚函数
     virtual EventBase *allocBase() {
         int c = id_++;
-
-        /** 选择一个event base事件派发器， 轮训： 哈希桶选择算法，  **/
         return &bases_[c % bases_.size()];
     }
     void loop();
@@ -108,7 +65,6 @@ struct MultiBase : public EventBases {
 
    private:
     std::atomic<int> id_;
-    //初始化时确认了vector容易的大小为sz
     std::vector<EventBase> bases_;
 };
 

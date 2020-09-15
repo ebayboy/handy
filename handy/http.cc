@@ -22,7 +22,6 @@ string HttpMsg::getValueFromMap_(map<string, string> &m, const string &n) {
     return p == m.end() ? "" : p->second;
 }
 
-//解析http报文
 HttpMsg::Result HttpMsg::tryDecode_(Slice buf, bool copyBody, Slice *line1) {
     if (complete_) {
         return Complete;
@@ -81,7 +80,7 @@ HttpMsg::Result HttpMsg::tryDecode_(Slice buf, bool copyBody, Slice *line1) {
 int HttpRequest::encode(Buffer &buf) {
     size_t osz = buf.size();
     char conlen[1024], reqln[4096];
-    snprintf(reqln, sizeof reqln, "%s %s %s\n\n", method.c_str(), query_uri.c_str(), version.c_str());
+    snprintf(reqln, sizeof reqln, "%s %s %s\r\n", method.c_str(), query_uri.c_str(), version.c_str());
     buf.append(reqln);
     for (auto &hd : headers) {
         buf.append(hd.first).append(": ").append(hd.second).append("\r\n");
@@ -229,10 +228,7 @@ void HttpConnPtr::logOutput(const char *title) const {
     trace("%s:\n%.*s", title, (int) o.size(), o.data());
 }
 
-//构造函数， 父类结构体初始化
 HttpServer::HttpServer(EventBases *bases) : TcpServer(bases) {
-    // defcb_: send response
-    // set HttpCallBack ,
     defcb_ = [](const HttpConnPtr &con) {
         HttpResponse &resp = con.getResponse();
         resp.status = 404;
@@ -240,42 +236,22 @@ HttpServer::HttpServer(EventBases *bases) : TcpServer(bases) {
         resp.body = "Not Found";
         con.sendResponse();
     };
-
-    // set conncallback
-    // typedef std::shared_ptr<TcpConn> TcpConnPtr;
     conncb_ = [] { return TcpConnPtr(new TcpConn); };
-
-    // on tcp conncreate
-    // conn创建的时候，创建一个httpconn， 之后设置httpmsg回调函数
-    // tcp子类tcpserver的onConnCreate(lambda func cb_), 设置回调函数 createcb_
     onConnCreate([this]() {
-        // create httpconn
-        // lambda作为函数参数， 会将执行结果作为实际参数传递
         HttpConnPtr hcon(conncb_());
-
-        // set httpcon-> onHttpMsg(lambada)
-        // typedef std::function<void(const HttpConnPtr &)> HttpCallBack;
-        hcon.onHttpMsg(
-            // lambda捕获this指针(HttpServer)
-            [this](const HttpConnPtr &hcon) {
-                // TODO ? getRequest 处理流程？ tcp->internalCtx_.context
-                // ?? what time set internalCtx_ ?
-                HttpRequest &req = hcon.getRequest();
-                trace("method:[%s] uri:[%s]:", req.method.c_str(), req.uri.c_str());
-                auto p = cbs_.find(req.method);  // find method
-                if (p != cbs_.end()) {
-                    auto p2 = p->second.find(req.uri);  // find uri
-                    if (p2 != p->second.end()) {
-                        p2->second(hcon);  // uri->callback
-                        return;
-                    }
+        hcon.onHttpMsg([this](const HttpConnPtr &hcon) {
+            HttpRequest &req = hcon.getRequest();
+            auto p = cbs_.find(req.method);
+            if (p != cbs_.end()) {
+                auto p2 = p->second.find(req.uri);
+                if (p2 != p->second.end()) {
+                    p2->second(hcon);
+                    return;
                 }
-
-                // send response to client
-                defcb_(hcon);
-            });
-        //返回tcp连接对象
-        return hcon.tcp;  // TcpConnPtr
+            }
+            defcb_(hcon);
+        });
+        return hcon.tcp;
     });
 }
 

@@ -110,7 +110,6 @@ void EventBase::wakeup() {
     imp_->wakeup();
 }
 
-//TODO: EventBase::loop -> EventsImp::loop -> loop_once
 void EventBase::loop() {
     imp_->loop();
 }
@@ -282,24 +281,12 @@ bool EventsImp::cancel(TimerId timerid) {
 
 void MultiBase::loop() {
     int sz = bases_.size();
-
-    //初始化 sz-1个线程， 
-
-    //TODO : 初始化 sz-1个子线程事件派发器，而最后一个IE事件派发器由主线程派发
     vector<thread> ths(sz - 1);
     for (int i = 0; i < sz - 1; i++) {
-        //线程事件分发
         thread t([this, i] { bases_[i].loop(); });
-
-        //swap()：交换两个线程对象所代表的底层句柄(underlying handles)、
-        // 交换为了将线程句对象存储到容器ths中， swap底层实际是交换的文件句柄， 消耗很小
         ths[i].swap(t);
     }
-
-    //最后一个事件派发器： 由主线程进行派发
     bases_.back().loop();
-
-    //主线程等待回收线程状态
     for (int i = 0; i < sz - 1; i++) {
         ths[i].join();
     }

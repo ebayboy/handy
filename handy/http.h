@@ -125,8 +125,6 @@ struct HttpConnPtr {
 typedef HttpConnPtr::HttpCallBack HttpCallBack;
 
 // http服务器
-// 结构体继承 http<-tcpserver
-// 构造函数初始化顺序： tcpserver -> httpserver
 struct HttpServer : public TcpServer {
     HttpServer(EventBases *base);
     template <class Conn = TcpConn>
@@ -140,10 +138,7 @@ struct HttpServer : public TcpServer {
    private:
     HttpCallBack defcb_;
     std::function<TcpConnPtr()> conncb_;
-
-    //cbs_[method][uri] = cb;
-    // 函数原型：std::map<method, uri, HttpCallBack>>
-    std::map<std::string, std::map<std::string, HttpCallBack>> cbs_;  //方法回调函数
+    std::map<std::string, std::map<std::string, HttpCallBack>> cbs_;
 };
 
 }  // namespace handy

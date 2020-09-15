@@ -20,8 +20,6 @@ void TcpConn::attach(EventBase *base, int fd, Ip4Addr local, Ip4Addr peer) {
     delete channel_;
     channel_ = new Channel(base, fd, kWriteEvent | kReadEvent);
     trace("tcp constructed %s - %s fd: %d", local_.toString().c_str(), peer_.toString().c_str(), fd);
-    //类继承enable_shared_from_this基类， 变成了强智能指针类
-    //从而可以使用shared_from_this()获取对象智能指针，避免二次析构等智能指针使用的错误。
     TcpConnPtr con = shared_from_this();
     con->channel_->onRead([=] { con->handleRead(con); });
     con->channel_->onWrite([=] { con->handleWrite(con); });
@@ -344,7 +342,6 @@ void TcpServer::handleAccept() {
     }
 }
 
-//typedef std::shared_ptr<HSHA> HSHAPtr;
 HSHAPtr HSHA::startServer(EventBase *base, const std::string &host, unsigned short port, int threads) {
     HSHAPtr p = HSHAPtr(new HSHA(threads));
     p->server_ = TcpServer::startServer(base, host, port);
